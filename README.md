@@ -7,8 +7,9 @@
 （したがってこの View のtransformは変更したらダメです）.
 * タッチ操作は layer.anchorPoint を中心に判定するのでだいたい直感的に回る.
 * 慣性で回り続ける＆止まる
+* ついでにタッチ判定を簡単に円形にできる（roundedHitRadiusプロパティ）.
 
 ## ValueDecelerator クラス
-* 値をひとつ慣性で変化させる.  
+* 値をひとつ慣性で変化させる.
 * CADisplayLinkドリブンなのでアニメーション向け.
 
