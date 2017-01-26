@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,27 +24,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWV-QH-tjM" customClass="DialView" customModule="DialView" customModuleProvider="target">
-                                <rect key="frame" x="46" y="122" width="240" height="240"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NuU-17-B9E">
-                                        <rect key="frame" x="99" y="54" width="42" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.47142269739999998" blue="0.88049224619999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="36" y="182" width="303" height="303"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="jW3-3D-aE5"/>
-                                    <constraint firstAttribute="height" constant="240" id="nd3-jz-p52"/>
+                                    <constraint firstAttribute="width" secondItem="kWV-QH-tjM" secondAttribute="height" multiplier="1:1" id="cFF-wz-IjP"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="kWV-QH-tjM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="46" id="kh2-LT-A78"/>
-                            <constraint firstItem="kWV-QH-tjM" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="102" id="l1s-ym-AW9"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kWV-QH-tjM" secondAttribute="trailing" constant="20" id="Qyh-l9-KkO"/>
+                            <constraint firstItem="kWV-QH-tjM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="bXV-yq-Y98"/>
+                            <constraint firstItem="kWV-QH-tjM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="uSB-us-5mC"/>
                         </constraints>
                     </view>
                     <connections>
