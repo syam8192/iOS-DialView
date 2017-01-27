@@ -26,10 +26,10 @@ class DialView: UIView {
     }
     
     var delegate: DialViewDelegate?
+    var angleDecelerator: ValueDecelerator = ValueDecelerator()
 
     private var previousPoint: CGPoint = CGPoint.zero
     private var previousTime: TimeInterval = 0
-    private var angleDecelerator: ValueDecelerator = ValueDecelerator()
     private var isDragging: Bool = false
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -99,6 +99,10 @@ class DialView: UIView {
             }
         }
         return v
+    }
+    
+    func stopRotation() {
+        angleDecelerator.stop(needsLastUpdate: true)
     }
     
     private func stoppedWithoutDeceleration() {

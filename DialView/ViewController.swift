@@ -8,6 +8,7 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var dialView: DialView!
+    @IBOutlet weak var slider: UISlider!
 
     let european = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26]
 
@@ -40,8 +41,15 @@ class ViewController: UIViewController {
         dialView.roundedHitRadius = halfWidth
         dialView.stickeyPointInterval = 3.1415927 * 2 / CGFloat(div)
         dialView.delegate = self
+        
+        onDidSlide(slider: slider)
     }
 
+    @IBAction func onDidSlide(slider: UISlider) {
+        dialView.stopRotation()
+        dialView.angleDecelerator.decelerationRate = CGFloat(slider.value * slider.value)
+    }
+    
 }
 
 

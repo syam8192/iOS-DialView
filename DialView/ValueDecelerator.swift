@@ -30,13 +30,20 @@ class ValueDecelerator {
         initialVelocity = velocity
         procedure = update
         needsAbortAnimating = false
-        initialTime = NSDate().timeIntervalSince1970
-        targetTime = abs(initialVelocity / decelerationRate)
-        deceleration = initialVelocity > 0 ? -decelerationRate : decelerationRate
-        targetValue = initialValue + initialVelocity * targetTime + (deceleration * targetTime * targetTime / 2)
-        if stickeyPointInterval > 0 {
-            targetValue = round(targetValue / stickeyPointInterval) * stickeyPointInterval
-            deceleration = (targetValue - initialValue - initialVelocity * targetTime ) * 2 / (targetTime * targetTime)
+        if decelerationRate > 0 {
+            initialTime = NSDate().timeIntervalSince1970
+            targetTime = abs(initialVelocity / decelerationRate)
+            deceleration = initialVelocity > 0 ? -decelerationRate : decelerationRate
+            targetValue = initialValue + initialVelocity * targetTime + (deceleration * targetTime * targetTime / 2)
+            if stickeyPointInterval > 0 {
+                targetValue = round(targetValue / stickeyPointInterval) * stickeyPointInterval
+                deceleration = (targetValue - initialValue - initialVelocity * targetTime ) * 2 / (targetTime * targetTime)
+            }
+        }
+        else {
+            targetTime = 0
+            deceleration = 0
+            targetValue = 0
         }
         if displayLink == nil {
             displayLink = CADisplayLink(target: self, selector: #selector(ValueDecelerator.animationUpdate(_:)))
@@ -56,15 +63,23 @@ class ValueDecelerator {
     }
     @objc private func animationUpdate(_ : CADisplayLink) {
         let t = CGFloat(NSDate().timeIntervalSince1970 - initialTime)
-        let finished = CGFloat(targetTime) < t
-        value = finished ? targetValue : initialValue + initialVelocity * t + (deceleration * t * t / 2)
-        if !(procedure?(value, finished) ?? true) || finished || needsAbortAnimating {
-            stopUpdating()
+        if (deceleration != 0) {
+            let finished = CGFloat(targetTime) < t
+            value = finished ? targetValue : initialValue + initialVelocity * t + (deceleration * t * t / 2)
+            if !(procedure?(value, finished) ?? true) || finished || needsAbortAnimating {
+                stopUpdating()
+            }
+        }
+        else {
+            if !(procedure?(initialValue + initialVelocity * t, false) ?? true) || needsAbortAnimating {
+                stopUpdating()
+            }
         }
     }
     private func stopUpdating() {
         displayLink?.invalidate()
         displayLink = nil
+        deceleration = 0
     }
 
 }

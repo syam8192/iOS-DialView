@@ -36,18 +36,28 @@
                                     <constraint firstAttribute="width" secondItem="kWV-QH-tjM" secondAttribute="height" multiplier="1:1" id="cFF-wz-IjP"/>
                                 </constraints>
                             </view>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="T6n-4y-J2F">
+                                <rect key="frame" x="14" y="617" width="347" height="31"/>
+                                <connections>
+                                    <action selector="onDidSlideWithSlider:" destination="BYZ-38-t0r" eventType="valueChanged" id="yNp-Md-Ld4"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="y6D-bq-jaI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6vI-ze-mr1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kWV-QH-tjM" secondAttribute="trailing" constant="20" id="Qyh-l9-KkO"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="T6n-4y-J2F" secondAttribute="bottom" constant="20" id="Wmm-WD-WFk"/>
                             <constraint firstItem="kWV-QH-tjM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="bXV-yq-Y98"/>
                             <constraint firstItem="kWV-QH-tjM" firstAttribute="top" secondItem="y6D-bq-jaI" secondAttribute="bottom" id="dpw-qI-EOz"/>
+                            <constraint firstItem="T6n-4y-J2F" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="ldQ-fc-bDF"/>
+                            <constraint firstAttribute="trailing" secondItem="T6n-4y-J2F" secondAttribute="trailing" constant="16" id="mwO-bL-L8R"/>
                             <constraint firstItem="kWV-QH-tjM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="uSB-us-5mC"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="dialView" destination="kWV-QH-tjM" id="hpT-QB-2ya"/>
+                        <outlet property="slider" destination="T6n-4y-J2F" id="sg9-oH-yWh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
