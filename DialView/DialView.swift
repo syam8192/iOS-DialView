@@ -16,7 +16,7 @@ class DialView: UIView {
     var maxAngularVelocity: CGFloat = 200
     // view内のタッチ判定をアンカーポイントからの距離で限定する. 0 以下で無効.
     var roundedHitRadius: CGFloat = 0
-    // タッチを放したときに慣性で回転を始める角速度の下限.
+    // タッチを放したときに慣性で回転を始める角速度の下限. DialView.decelerateThresholdInfinite にすると慣性アニメーションしない.
     var decelerateThreshold: CGFloat = 1
     // 離散的な位置に貼り付いて停止する場合の間隔(rad). 0 以下で無効.
     var stickeyPointInterval: CGFloat = 0 {
@@ -27,6 +27,7 @@ class DialView: UIView {
     
     var delegate: DialViewDelegate?
     var angleDecelerator: ValueDecelerator = ValueDecelerator()
+    static let decelerateThresholdInfinite: CGFloat = CGFloat.greatestFiniteMagnitude
 
     private var previousPoint: CGPoint = CGPoint.zero
     private var previousTime: TimeInterval = 0
@@ -56,10 +57,8 @@ class DialView: UIView {
         previousTime = nowTime
         previousPoint = point
         update(newAngle: angle + velocity)
-
         if !isDragging { delegate?.dialViewWillBeginDragging(self) }
         isDragging = true
-        
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
