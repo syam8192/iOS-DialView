@@ -23,6 +23,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="▼" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y6D-bq-jaI">
+                                <rect key="frame" x="178" y="158" width="18" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWV-QH-tjM" customClass="DialView" customModule="DialView" customModuleProvider="target">
                                 <rect key="frame" x="36" y="182" width="303" height="303"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -33,8 +39,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="y6D-bq-jaI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6vI-ze-mr1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kWV-QH-tjM" secondAttribute="trailing" constant="20" id="Qyh-l9-KkO"/>
                             <constraint firstItem="kWV-QH-tjM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="bXV-yq-Y98"/>
+                            <constraint firstItem="kWV-QH-tjM" firstAttribute="top" secondItem="y6D-bq-jaI" secondAttribute="bottom" id="dpw-qI-EOz"/>
                             <constraint firstItem="kWV-QH-tjM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="uSB-us-5mC"/>
                         </constraints>
                     </view>

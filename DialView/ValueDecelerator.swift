@@ -19,6 +19,9 @@ class ValueDecelerator {
     var maxValue: CGFloat = 200
     var minValue: CGFloat = 0.01
     var procedure: DecelerationAnimationProcedure?
+    var stickeyPointInterval: CGFloat = 0
+    
+    private var deceleration: CGFloat = 0
     private var displayLink: CADisplayLink?
     
     func deceleration(initialValue value: CGFloat, velocity: CGFloat, update: @escaping DecelerationAnimationProcedure) {
@@ -27,13 +30,18 @@ class ValueDecelerator {
         procedure = update
         initialTime = NSDate().timeIntervalSince1970
         targetTime = abs(initialVelocity / decelerationRate)
-        let acceleration = initialVelocity > 0 ? -decelerationRate : decelerationRate
-        targetValue = initialValue + initialVelocity * targetTime + (acceleration * targetTime * targetTime / 2)
+        deceleration = initialVelocity > 0 ? -decelerationRate : decelerationRate
+        targetValue = initialValue + initialVelocity * targetTime + (deceleration * targetTime * targetTime / 2)
+        if stickeyPointInterval > 0 {
+            targetValue = round(targetValue / stickeyPointInterval) * stickeyPointInterval
+            deceleration = (targetValue - initialValue - initialVelocity * targetTime ) * 2 / (targetTime * targetTime)
+        }
         if displayLink == nil {
             displayLink = CADisplayLink(target: self, selector: #selector(ValueDecelerator.animationUpdate))
             displayLink?.add(to: RunLoop.main, forMode: .defaultRunLoopMode)
         }
     }
+
     func stop(needsLastUpdate: Bool = false) {
         if needsLastUpdate {
             animationUpdate(stop: true)
@@ -44,9 +52,8 @@ class ValueDecelerator {
     }
     @objc func animationUpdate(stop: Bool = false) {
         let t = CGFloat(NSDate().timeIntervalSince1970 - initialTime)
-        let acceleration = initialVelocity > 0 ? -decelerationRate : decelerationRate
         let finished = CGFloat(targetTime) < t
-        value = finished ? targetValue : initialValue + initialVelocity * t + (acceleration * t * t / 2)
+        value = finished ? targetValue : initialValue + initialVelocity * t + (deceleration * t * t / 2)
         if !(procedure?(value, finished) ?? true) || finished || stop {
             stopUpdating()
         }

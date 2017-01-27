@@ -18,7 +18,13 @@ class DialView: UIView {
     var roundedHitRadius: CGFloat = 0
     // タッチを放したときに慣性で回転を始める角速度の下限.
     var decelerateThreshold: CGFloat = 1
-
+    // 離散的な位置に貼り付いて停止する場合の間隔(rad). 0 以下で無効.
+    var stickeyPointInterval: CGFloat = 0 {
+        didSet {
+            angleDecelerator.stickeyPointInterval = stickeyPointInterval
+        }
+    }
+    
     var delegate: DialViewDelegate?
 
     private var previousPoint: CGPoint = CGPoint.zero
@@ -68,9 +74,11 @@ class DialView: UIView {
                 return true
             }
             delegate?.dialViewWillEndDragging(self, withAngularVelocity: angularVelocity, targetAngle: angleDecelerator.targetValue)
+            delegate?.dialViewWillBeginDecelerating(self)
         }
         else {
             angularVelocity = 0
+            stoppedWithoutDeceleration()
         }
         delegate?.dialViewDidEndDragging(self, willDecelerate: willDecelerate)
     }
@@ -79,6 +87,7 @@ class DialView: UIView {
         isDragging = false
         angularVelocity = 0
         angleDecelerator.stop()
+        stoppedWithoutDeceleration()
     }
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let v = super.hitTest(point, with: event)
@@ -90,6 +99,23 @@ class DialView: UIView {
             }
         }
         return v
+    }
+    
+    private func stoppedWithoutDeceleration() {
+        let stickeyAngle: CGFloat = round(angle / stickeyPointInterval) * stickeyPointInterval
+        let d: CGFloat = abs(angle - stickeyAngle) / 3.1415927 * 2
+        UIView.animate(withDuration: TimeInterval(d),
+                       delay: 0.0,
+                       options: [.allowUserInteraction, .curveEaseOut, .beginFromCurrentState] ,
+                       animations:
+            {
+                self.angle = stickeyAngle
+                self.transform = CGAffineTransform(rotationAngle: stickeyAngle)
+                self.delegate?.dialViewWillBeginDecelerating(self)
+        }, completion:
+            { _ in
+                self.delegate?.dialViewDidEndDecelerating(self)
+        })
     }
 
     private func update(newAngle: CGFloat) {
