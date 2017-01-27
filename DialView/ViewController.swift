@@ -15,6 +15,9 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
+        dialView.stopRotation()
+        dialView.subviews.forEach{ $0.removeFromSuperview() }
+        
         let halfWidth = dialView.bounds.width / 2
         let div: Int = european.count
         for i in 0..<div {
