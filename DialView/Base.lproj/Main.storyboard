@@ -36,7 +36,7 @@
                                     <constraint firstAttribute="width" secondItem="kWV-QH-tjM" secondAttribute="height" multiplier="1:1" id="cFF-wz-IjP"/>
                                 </constraints>
                             </view>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="T6n-4y-J2F">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="3" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="T6n-4y-J2F">
                                 <rect key="frame" x="14" y="617" width="347" height="31"/>
                                 <connections>
                                     <action selector="onDidSlideWithSlider:" destination="BYZ-38-t0r" eventType="valueChanged" id="yNp-Md-Ld4"/>
