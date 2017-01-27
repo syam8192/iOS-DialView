@@ -33,8 +33,8 @@ class DialView: UIView {
     private var isDragging: Bool = false
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
         transform = CGAffineTransform.identity
+        super.touchesBegan(touches, with: event)
         previousPoint = touches.first?.location(in: self) ?? CGPoint.zero
         previousTime = NSDate().timeIntervalSince1970
         angularVelocity = 0
@@ -43,8 +43,8 @@ class DialView: UIView {
         transform = CGAffineTransform(rotationAngle: angle)
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesMoved(touches, with: event)
         transform = CGAffineTransform.identity
+        super.touchesMoved(touches, with: event)
         let nowTime: TimeInterval = NSDate().timeIntervalSince1970
         let point = touches.first?.location(in: self) ?? CGPoint.zero
         let vx0 = point.x - previousPoint.x

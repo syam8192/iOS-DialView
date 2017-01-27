@@ -23,11 +23,13 @@ class ValueDecelerator {
     
     private var deceleration: CGFloat = 0
     private var displayLink: CADisplayLink?
+    private var needsAbortAnimating: Bool = false
     
     func deceleration(initialValue value: CGFloat, velocity: CGFloat, update: @escaping DecelerationAnimationProcedure) {
         initialValue = value
         initialVelocity = velocity
         procedure = update
+        needsAbortAnimating = false
         initialTime = NSDate().timeIntervalSince1970
         targetTime = abs(initialVelocity / decelerationRate)
         deceleration = initialVelocity > 0 ? -decelerationRate : decelerationRate
@@ -37,24 +39,26 @@ class ValueDecelerator {
             deceleration = (targetValue - initialValue - initialVelocity * targetTime ) * 2 / (targetTime * targetTime)
         }
         if displayLink == nil {
-            displayLink = CADisplayLink(target: self, selector: #selector(ValueDecelerator.animationUpdate))
+            displayLink = CADisplayLink(target: self, selector: #selector(ValueDecelerator.animationUpdate(_:)))
             displayLink?.add(to: RunLoop.main, forMode: .defaultRunLoopMode)
         }
     }
-
     func stop(needsLastUpdate: Bool = false) {
         if needsLastUpdate {
-            animationUpdate(stop: true)
+            if let dispLink = displayLink {
+                needsAbortAnimating = true
+                animationUpdate(dispLink)
+            }
         }
         else {
             stopUpdating()
         }
     }
-    @objc func animationUpdate(stop: Bool = false) {
+    @objc private func animationUpdate(_ : CADisplayLink) {
         let t = CGFloat(NSDate().timeIntervalSince1970 - initialTime)
         let finished = CGFloat(targetTime) < t
         value = finished ? targetValue : initialValue + initialVelocity * t + (deceleration * t * t / 2)
-        if !(procedure?(value, finished) ?? true) || finished || stop {
+        if !(procedure?(value, finished) ?? true) || finished || needsAbortAnimating {
             stopUpdating()
         }
     }
